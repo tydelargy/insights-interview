@@ -14,39 +14,20 @@ In addition to writing the code required by the instructions, write down your an
 Most of the questions are open ended, and you don't need to make your code handle the questions below each prompt, but please make sure your code works before moving on to the next question.
 Clear writing and expressing your ideas is just as valuable as writing great code.
 
-## Motivation
-
-We are testing you on your ability to reason through ambiguity, interact with software tools, and create features.
-We are aware that working with the Intuit developer api and documentation is difficult. If you join us as an integrations engineer, you'll likely work with even more difficult integrations on a daily basis. We want to make sure you have the skills required to navigate the myriad of integration documents out in the world.
-
 ## Getting started
 
 Make a fork of this repo on your own GitHub account and then clone it down to your personal computer.
 
 - Read through the files in the `/src` directory.
 - Install dependencies for the project with `yarn install`.
-- Start the backend server with `yarn start` or `yarn dev` depending on whether you want the server to run in "watch mode".
+- Start the backend server with `yarn start` or `yarn dev` depending on whether you want the server to run in [watch mode](https://github.com/digital-loukoum/esrun#watch-mode), but note that it won't restart your server if it crashes.
 - Navigate to [http://localhost:8080](http://localhost:8080) in your browser
 
 If you have trouble, please don't hesitate to reach out to elliot@growtopline.com.
 
 ## Instructions
 
-1. This application has been written to go through the Intuit OAuth flow. The code should work as written, but it will require the credentials of a sandbox Intuit account to work properly. Please [create a developer account](https://accounts.intuit.com/signup.html?offering_id=Intuit.devx.devx) with Intuit and use the [developer dashboard](https://developer.intuit.com/app/developer/dashboard) to create a Intuit App in the sandbox environment. Using the client ID and secret from your app, make the OAuth flow work.
-
-- What did you need to do to make the app work?
-- Why is it important to verify that the `state` value created in the OAuth URI is the same state value provided in the callback?
-- If this app were running in production, how would you give the app access to your Intuit client ID and secret?
-
-2. Now that the OAuth flow works, store the auth tokens in the database. You'll likely need to modify `/src/db.ts` as well as `/src/main.ts`. Once you've got the tokens stored in the database, implement the `/refresh-token` route using the Intuit OAuth client.
-
-- Why might it be a good idea to encrypt the auth_token and the refresh_token? (you don't need to implement this encryption)
-- What race conditions might be important to consider when refreshing the auth tokens?
-
-3. Implement the `/company-info` route using the [CompanyInfo](https://developer.intuit.com/app/developer/qbo/docs/api/accounting/all-entities/companyinfo) query endpoint and the [makeApiCall](https://www.npmjs.com/package/intuit-oauth#make-api-call) method on the OAuthClient.
-   Pass the result of the call directly back to the user as JSON.
-
-- What are the pros and cons of passing the JSON value received from this endpoint directly back to the calling user?
+1. The script `/src/customer-insights.ts` correctly finds the min, max, mean, and median customer spend. However it loads every row into memory in order to determine that calculation. Change the script to calculate the min, max, mean and median if the entire customer dataset did not fit in memory.
 
 ## Tips
 
