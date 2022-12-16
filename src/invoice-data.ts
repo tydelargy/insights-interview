@@ -2,9 +2,29 @@
 
 export const invoiceData = [
   {
+    customer: 31,
+    amount: 1913,
+    timestamp: 1612408069253,
+  },
+  {
+    customer: 88,
+    amount: 1597,
+    timestamp: 1670597898813,
+  },
+  {
     customer: 20,
     amount: 1187,
     timestamp: 1577865600000,
+  },
+  {
+    customer: 100,
+    amount: 1889,
+    timestamp: 1671011779578,
+  },
+  {
+    customer: 17,
+    amount: 0,
+    timestamp: 1577897272325,
   },
   {
     customer: 80,
@@ -22,14 +42,14 @@ export const invoiceData = [
     timestamp: 1578114645245,
   },
   {
-    customer: 10,
-    amount: 1449,
-    timestamp: 1578196735526,
-  },
-  {
     customer: 70,
     amount: 1371,
     timestamp: 1578279230501,
+  },
+  {
+    customer: 62,
+    amount: 1305,
+    timestamp: 1670844929842,
   },
   {
     customer: 83,
@@ -40,6 +60,11 @@ export const invoiceData = [
     customer: 96,
     amount: 1969,
     timestamp: 1578443407476,
+  },
+  {
+    customer: 68,
+    amount: 1034,
+    timestamp: 1670269939281,
   },
   {
     customer: 72,
@@ -85,6 +110,11 @@ export const invoiceData = [
     customer: 84,
     amount: 1891,
     timestamp: 1579189844417,
+  },
+  {
+    customer: 10,
+    amount: 1449,
+    timestamp: 1578196735526,
   },
   {
     customer: 99,
@@ -2085,11 +2115,6 @@ export const invoiceData = [
     customer: 70,
     amount: 1425,
     timestamp: 1612325093047,
-  },
-  {
-    customer: 31,
-    amount: 1913,
-    timestamp: 1612408069253,
   },
   {
     customer: 63,
@@ -5583,11 +5608,6 @@ export const invoiceData = [
   },
   {
     customer: 68,
-    amount: 1034,
-    timestamp: 1670269939281,
-  },
-  {
-    customer: 68,
     amount: 1504,
     timestamp: 1670352588341,
   },
@@ -5602,11 +5622,6 @@ export const invoiceData = [
     timestamp: 1670515401757,
   },
   {
-    customer: 88,
-    amount: 1597,
-    timestamp: 1670597898813,
-  },
-  {
     customer: 91,
     amount: 1467,
     timestamp: 1670678955493,
@@ -5617,19 +5632,9 @@ export const invoiceData = [
     timestamp: 1670760985266,
   },
   {
-    customer: 62,
-    amount: 1305,
-    timestamp: 1670844929842,
-  },
-  {
     customer: 89,
     amount: 1575,
     timestamp: 1670928444577,
-  },
-  {
-    customer: 100,
-    amount: 1889,
-    timestamp: 1671011779578,
   },
   {
     customer: 12,

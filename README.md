@@ -20,17 +20,30 @@ Make a fork of this repo on your own GitHub account and then clone it down to yo
 
 - Read through the files in the `/src` directory.
 - Install dependencies for the project with `yarn install`.
-- Start the backend server with `yarn start` or `yarn dev` depending on whether you want the server to run in [watch mode](https://github.com/digital-loukoum/esrun#watch-mode), but note that it won't restart your server if it crashes.
-- Navigate to [http://localhost:8080](http://localhost:8080) in your browser
-
-If you have trouble, please don't hesitate to reach out to elliot@growtopline.com.
+- Run `yarn part-0` to run the `/src/min-max-mean-invoice.ts` script.
+  Read over the script to get a sense of how we're importing the data from a file.
+  We're cutting some corners to make things easier for this interview.
+  Use this script as a rough guide when writing your own scripts.
 
 ## Instructions
 
-1. The script `/src/customer-insights.ts` correctly finds the min, max, mean, and median customer spend. However it loads every row into memory in order to determine that calculation. Change the script to calculate the min, max, mean and median if the entire customer dataset did not fit in memory.
+1. Implement the `top-ten-customers.ts` script. Use `yarn part-1` to run the script, and paste your output and the answers to the questions below.
+
+- How does your solution scale with the number of invoices? How about the number of customers?
+
+2. Implement the `customers-by-cohort.ts` script. Use `yarn part-2` to run the script, and paste your output and the answers to the questions below.
+
+- How does your solution scale with the number of invoices? How about the number of customers?
+- Does your solution depend on whether the invoice data is sorted?
+
+3. Implement the `revenue-by-cohort.ts` script. Use `yarn part-3` to run the script, and paste your output and the answers to the questions below.
+
+- How does your solution scale with the number of invoices? How about the number of customers?
+- Does your solution depend on whether the invoice data is sorted?
 
 ## Tips
 
+- All of the questions have a desired output format that can require a lot of string mangling. If you're stuck on that part, move on to the next question and get back to formatting later.
 - The project needs some organization. Feel free to create as many files and folders as you need.
 - Git is your friend. Commit often and use descriptive commit messages. Push your work to GitHub so you don't lose it.
 - Get it working and then make it look good. Don't get lost in the perfect solution before you have a working solution.
@@ -43,9 +56,17 @@ If you have trouble, please don't hesitate to reach out to elliot@growtopline.co
 
 Please write your responses to the questions in the instructions here. Please indicate any tradeoffs you made.
 
-1.
-2.
-3.
+1. Output:
+
+Answers:
+
+2. Output:
+
+Answers:
+
+3. Output:
+
+Answers:
 
 ## Submitting
 

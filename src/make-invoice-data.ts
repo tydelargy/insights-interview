@@ -1,10 +1,10 @@
 // Script used to generate random invoice data
+// You won't need to interact with this script, so you can safely ignore it
 const jan_1_2020 = new Date(2020, 0, 1);
 const now = new Date();
-const dayInMs = 1000 * 60 * 60 * 24;
 
 function randNearOneDate() {
-  return dayInMs - 1000 * 60 * 60 * (Math.random() + 0.5);
+  return 1000 * 60 * 60 * (24 - (Math.random() + 0.5));
 }
 
 const out = [];
