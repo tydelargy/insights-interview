@@ -43,8 +43,8 @@ Make a fork of this repo on your own GitHub account and then clone it down to yo
 
 ## Tips
 
-- All of the questions have a desired output format that can require a lot of string mangling. If you're stuck on that part, move on to the next question and get back to formatting later.
-- The project needs some organization. Feel free to create as many files and folders as you need.
+- All of the questions have a desired output format that can require a lot of string mangling.
+  If you're stuck on the formatting part, move on to the next question and get back to formatting later.
 - Git is your friend. Commit often and use descriptive commit messages. Push your work to GitHub so you don't lose it.
 - Get it working and then make it look good. Don't get lost in the perfect solution before you have a working solution.
 - Write down your responses to all the questions in the prompt before moving on to the next prompt.
