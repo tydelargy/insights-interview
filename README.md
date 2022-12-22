@@ -73,4 +73,5 @@ Answers:
 To submit your code, send us a link to your repo.
 Once we confirm that we've downloaded your work, please delete the repo you created so future candidates don't accidentally find your solution.
 
-To submit your screen recording, please reach out to schedule a time we can use https://webwormhole.io/ to transfer the large file.
+To submit your screen recording, upload the video to YouTube as "Private" in the "Visibility" section and use the "Share Privately" button to share it with elliot@growtopline.com.
+If you'd prefer not to upload the video to YouTube, email elliot@growtopline.com and we can figure out an alternative.
