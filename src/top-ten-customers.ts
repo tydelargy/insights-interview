@@ -12,52 +12,55 @@ import { invoiceData } from './invoice-data';
 
 
 
-
-export interface customer_ARR{
+//Creating interface for annual customer revenue
+interface customer_ARR{
     customer: number;
     rev: number;
 }
 
 
-let customer_rev = new Array();
+let customerRev = new Array();
 //Lazy Double Loop?
 //Should give us all the sums for customers
 
 for (const invoice of invoiceData){
     let found: boolean = false;
-    for (const customer of customer_rev){
-    // for(let i = 0; i < customer_rev.length; i++)
-        //Wouldn't init new cust.
+    for (const customer of customerRev){
+        //If we have found the customer
         if(invoice.customer == customer.customer){
-            // customer_rev[i].rev += invoice.amount;
             customer.rev = invoice.amount + customer.rev;
             found = true;
+            break;
         }
     }
+    //If the customer did not exist
     if (!found){
         //Inserting into customer_rev
         let newCust: customer_ARR = { customer: invoice.customer, rev: invoice.amount};
-        customer_rev.push(newCust);
+        customerRev.push(newCust);
     }
 }
 
-//printing to check how we're doing
-// console.log(customer_rev);
 
-let sorted = custARR_quickSort(customer_rev, 0, customer_rev.length - 1);
+//Cretaing a sorted array of 
+let sorted = custARR_quickSort(customerRev, 0, customerRev.length - 1);
 // console.log(sorted.slice(0, 10));
 
+
+//Providing 3 Digits for Customer ID
 let linespace = 3;
+//Pretty printing of top 10 customers.
 for (let i = 0; i < 10; i++){
     let line = "";
+    //Pad line with linespace difference.
     for (let j = 0; j < (linespace - sorted[i].customer.toString().length); j++){
         line = line + " ";
     }
-    // console.log(sorted[i].customer.toString() + ': ' + sorted[i].rev.toString());
+    //Add customer data to line
     line = line + sorted[i].customer.toString() + ": " + sorted[i].rev.toString();
+    //Print line
     console.log(line);
 }
-// console.log(sorted.length);
 
 
 
@@ -78,6 +81,7 @@ function custARR_partition(array: Array<customer_ARR>, left: number = 0, right: 
     let j = right;
   
     while (i <= j) {
+      //We are sorting high--->low so we swap > and <
       while (array[i].rev > pivot.rev) {
         i++;
       }

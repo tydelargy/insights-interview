@@ -10,25 +10,29 @@ import { invoiceData } from './invoice-data';
 // 2020-02: [5, 22, 89]
 // ...
 
-//NEEDS SOME FORMATING/MONTH REWORK --> +1 and need leading zero? 
 
+//Interface for a cohort
 export interface cohort{
     yr: number;
     mo: number;
     users: number[];
 }
 
+//Making empty array of cohorts
 let cohorts = Array();
 
 
 //Sorting so that we can always take first invoice, and don't need to double check.
 export let sortedInvoices = timestamp_quickSort(invoiceData, 0, invoiceData.length - 1);
 
-//For checking if already added
+//For quickly checking if we've already added a user to a cohort.
 let users = Array();
 
 for (const invoice of sortedInvoices){
+    //Create date object for using get year/mo methods.
     const dt = new Date(invoice.timestamp);
+
+    //See if we already added the current user.
     let added = users.includes(invoice.customer);
 
     //Skip rest of body if added
@@ -44,7 +48,7 @@ for (const invoice of sortedInvoices){
             }
         }
         
-        //Add new cohort.
+        //Add new cohort if we didn't add the user.
         if(!added && invoice.amount != 0){
             let newCo: cohort = {yr: dt.getFullYear(), mo: dt.getMonth() + 1, users: [invoice.customer]};
             cohorts.push(newCo);
@@ -55,20 +59,15 @@ for (const invoice of sortedInvoices){
     }
 }
 
-
-console.log("COHORTS: ");
-let user_sum = 0;
-for(let i = 0; i < cohorts.length; i++){
-    let digit = cohorts[i].mo.toString().length;
+//Loop through all cohorts and print them as desired.
+for(let cohort of cohorts){
+    let digit = cohort.mo.toString().length;
+    //Adding a leading zero to the month if needed.
     if(digit == 1){
-        console.log(cohorts[i].yr.toString() + "-0" + cohorts[i].mo.toString(), ": [" + cohorts[i].users.toString() + "]");
+        console.log(cohort.yr.toString() + "-0" + cohort.mo.toString(), ": [" + cohort.users.toString() + "]");
     }   
-    else{console.log(cohorts[i].yr.toString() + "-" + cohorts[i].mo.toString(), ": [" + cohorts[i].users.toString() + "]");}
-    // user_sum += cohorts[i].users.length;
+    else{console.log(cohort.yr.toString() + "-" + cohort.mo.toString(), ": [" + cohort.users.toString() + "]");}
 }
-
-// console.log("Number of Users : ", user_sum);
-// console.log(users.length);
 
 export let customersByCohort = cohorts;
 

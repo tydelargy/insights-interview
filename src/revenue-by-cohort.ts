@@ -1,5 +1,3 @@
-import { table } from 'console';
-import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript';
 import { customersByCohort, sortedInvoices } from './customers-by-cohort';
 import { invoiceData } from './invoice-data';
 
@@ -16,34 +14,27 @@ For example:
     ...:      ...,     ...       ...  ...
 */
 
-//Want to take sorted by timestamp invoices
-//Init a new obj and map array of zeroes to each cohort in cohorts
-
-//For invoice in invoices,
-    //Calculate cohort
-    //Calculate index for insertion
-    //Add ammt to that spot
 
 
 //Helper function to get months between two dates
 function monthsBetween(t1: number, t2: number){
+    //Calculate difference of months and years
     let dt1 = new Date(t1);
     let dt2 = new Date(t2);
     let years = dt2.getFullYear() - dt1.getFullYear();
     let months = dt2.getMonth() - dt1.getMonth();
+    //Add years to months and return
     months = (years * 12) + months;
     return months;
 
 }
 
-
 //Calculate total months existing between first and last invoice, +1 to be inclusive.
 let months = 1 + monthsBetween(sortedInvoices[0].timestamp, sortedInvoices[sortedInvoices.length - 1].timestamp);
-console.log("TOTAL MONTHS: ", months);
+// console.log("TOTAL MONTHS: ", months);
 
 
-
-
+//Keeping track of start date for calculating month index in main loop.
 let start  = sortedInvoices[0].timestamp;
 
 interface cohortRev{
@@ -55,12 +46,12 @@ interface cohortRev{
 let revByCohort = new Array();
 
 //Need to instantiate revByCohort with array of [0] * months
-
 for (const cohort of customersByCohort){
     let co: cohortRev = {yr: cohort.yr, mo: cohort.mo, rev: new Array<number>(months).fill(0)};
     revByCohort.push(co);
 }
 
+//Main loop for populating customersByCohort
 for (const invoice of sortedInvoices){
     //Will give us the index of the month we will be inserting to.
     let month_index = monthsBetween(start, invoice.timestamp);
@@ -70,8 +61,9 @@ for (const invoice of sortedInvoices){
     for(const cohort of customersByCohort){
         //Iterate through users
         for(const user of cohort.users){
-            //Adding condition
+            //When we have found the customer
             if(user == invoice.customer){
+                //Add the invoice amount to the current cohort at the current month.
                 revByCohort[cohort_index].rev[month_index] = invoice.amount + revByCohort[cohort_index].rev[month_index];
             }
         }
@@ -79,14 +71,9 @@ for (const invoice of sortedInvoices){
     }
 }
 
-//WORKING!!
-// console.log(revByCohort);
-
+//Calling Print Function
 printRevByCohort();
 
-// for(const cohort of revByCohort){
-//     console.log(cohort.rev.length);
-// }
 
 function printRevByCohort(){
     //Printing Header
@@ -108,6 +95,8 @@ function printRevByCohort(){
             tmp_mo = 1;
             tmp_yr = tmp_yr + 1;
         }
+
+        //Adding the padding for column and the constant length of "year-mo"
         tmpString = tmpString + "  "
         let mo_digit = String(tmp_mo).length;
         if(mo_digit == 1){
@@ -132,7 +121,6 @@ function printRevByCohort(){
 
 // 8 space lead for Header, 9 spaces in col, 2 space starter for date in header.
 
-
 //Helper function to pretty print a cohort
 function prettyPrint(cohort: cohortRev){
     let line = "";
@@ -156,9 +144,10 @@ function prettyPrint(cohort: cohortRev){
         for(let j = 0; j < (linespace - amtDigit); j++){
             tmpString = tmpString + " ";
         }
+
+        //Adding the invoice amount
         tmpString = tmpString + String(cohort.rev[i]) + ",";
         line = line + tmpString;
     }
     console.log(line);
-
 }
