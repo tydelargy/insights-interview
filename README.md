@@ -69,33 +69,32 @@ Please write your responses to the questions in the instructions here. Please in
  98: 24595
  73: 24422
 
-Answers: The runtime will scale directly with invoices and customers but several concessions have been made to improve average runtime. The first is that we add customers only when their first found, which means that our customer list grows over time, and therefore we do not search through the full list of customers with each invoice. We also break when we have found the customer, so we do not search the current customer list with each invoice either.
+Answers: The runtime will scale directly with invoices and will scale with customers but several concessions have been made to improve average runtime. The first is that we add customers only when their first found, which means that our customer list grows over time, and therefore we do not search through the full list of customers with each invoice. We also break when we have found the customer, so we do not search the current customer list with each invoice either. When sorting the customer list, a quicksort algorithm was used so that the sorting process is (Nlog(N)) for number of customers.
 
 2. Output:
 
-2020-01 : [20,80,28,73,10,70,83,96,72,27,89,13,34,65,14,98,84,99,11,44,92,15,21,42,40,23,39,51,30,78]
-2020-02 : [82,3,50,37,86,81,45,61,67,100,24,56,59,41,8,32,33]
-2020-03 : [93,94,25,19,12,48,4,55,47,90,5,77]
-2020-04 : [88,63,57,16,1,66,26,52,64,9,6,97,87]
-2020-05 : [22,74,18,95,53,79,85,49,36,38]
-2020-06 : [71,75,62,76,17,60,35,46]
+2020-01 : [10,11,13,14,15,20,21,23,27,28,30,34,39,40,42,44,51,65,70,72,73,78,80,83,84,89,92,96,98,99]
+2020-02 : [3,8,24,32,33,37,41,45,50,56,59,61,67,81,82,86,100]
+2020-03 : [4,5,12,19,25,47,48,55,77,90,93,94]
+2020-04 : [1,6,9,16,26,52,57,63,64,66,87,88,97]
+2020-05 : [18,22,36,38,49,53,74,79,85,95]
+2020-06 : [17,35,46,60,62,71,75,76]
 2020-07 : [29,58]
-2020-08 : [69,68]
+2020-08 : [68,69]
 2020-09 : [43]
 2020-10 : [54,91]
 2020-11 : [2,7]
 2021-02 : [31]
 
 
-Answers:
-
+Answers: The runtime will scale with invoices and customers. Once again we make several concessions to ignore unnecessary searches when we have found the correct existing cohort or if the user has already been added. This minimizes searching in both domains. The solution is dependent on a sorted list of invoices, which we accomplish with a quicksort of O(Nlog(N)) for the number of invoices. While this is an extra step, it allows us to avoid unnecessary operations. It would be necessary to go through every cohort and user to verify that we have not already inserted it and if we did, whether it is the proper cohort and not preempted by the current invoice. We must therefore do many more insertion and deletion operations for unnecessary users in incorrect cohorts which is costly. Our runtime would still scale with invoices, customers, and the number of cohorts, but it becomes N^2 for the number of cohorts. This is because we need to search for the current cohort of the invoice, as well as through all existing cohorts that may contain the user. We also can not afford to break from our cohort and user search since we need to verify the user does not exist in any of the cohorts. This will seriously affect the average runtime. Additionally, with this method we then also have to sort the cohorts with a quicksort, to provide the desired output and though this is a much smaller operation than sorting the invoices, the tradeoff for not being able to lazily insert into cohorts is needing to loop through cohorts twice. Theoretically, in practival application, we could also reduce the load for sorting invoices by doing a binary insertion for new invoices and for new customers. We would also be able to directly insert the customer into their cohort by searching through their invoices, not the entire invoice list. 
 
 3. Output:
 
-See part-3-output.txt
+See part-3-output.txt -- Not cleanly formatted in markdown to demonstrate printing function/
 
 
-Answers:
+Answers: Our solution scales directly with the number of invoices and customers. This is because we need to find the cohort for each user. There are no easy break cases in which we can avoid sections of our search except in the case of a 0 invoice, since we need to add every invoice, and must find the cohort to which the user belongs. Our solution does not directly depend on sorted invoice data. It functions agnostic to how the invoices are sorted except for one key feature, we must know the timestamp of an invoice for the first month of calculation. This could be hard-set, but we use the first index of a sorted invoice to create a starting timestamp, and then a months between function to calculate the length of an array representing the revenue by month for a cohort and the index at which to add the current invoice to. Provided this is accounted for, we can operate agnostic to a sorted invoice list. The current program operates off the unsorted list, but uses the sorted list to grab the earliest timestamp and therefore first month of calculation. The sorted list could be used in the program, and would not change the output, however, to fully demonstrate this capability the unsorted list is substituted in. Since the sorted list was already calculated this does not add to the time complexity of this program. 
 
 ## Submitting
 

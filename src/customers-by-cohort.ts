@@ -1,4 +1,5 @@
 import { invoiceData } from './invoice-data';
+import { timestamp_quickSort, gen_quickSort } from './quicksort';
 
 // Write a script to group each customer into their "cohort"
 // A customer's cohort is the month they paid their first non-zero invoice.
@@ -21,7 +22,6 @@ export interface cohort{
 //Making empty array of cohorts
 let cohorts = Array();
 
-
 //Sorting so that we can always take first invoice, and don't need to double check.
 export let sortedInvoices = timestamp_quickSort(invoiceData, 0, invoiceData.length - 1);
 
@@ -29,7 +29,7 @@ export let sortedInvoices = timestamp_quickSort(invoiceData, 0, invoiceData.leng
 let users = Array();
 
 for (const invoice of sortedInvoices){
-    //Create date object for using get year/mo methods.
+   // Create date object for using get year/mo methods.
     const dt = new Date(invoice.timestamp);
 
     //See if we already added the current user.
@@ -37,25 +37,25 @@ for (const invoice of sortedInvoices){
 
     //Skip rest of body if added
     if(!added){
-        //Add user to a cohort.
-        for(const co of cohorts){
-            if(invoice.amount != 0 && dt.getFullYear() == co.yr && dt.getMonth() == co.mo - 1){
-                //Add user to their cohort.
-                co.users.push(invoice.customer);
-                //For already added check
-                users.push(invoice.customer);
-                added = true;
-            }
-        }
-        
-        //Add new cohort if we didn't add the user.
-        if(!added && invoice.amount != 0){
-            let newCo: cohort = {yr: dt.getFullYear(), mo: dt.getMonth() + 1, users: [invoice.customer]};
-            cohorts.push(newCo);
-
-            //For already added check
-            users.push(invoice.customer);
-        }
+           if(invoice.amount != 0){
+                //Add user to a cohort.
+                for(const co of cohorts){
+                    if(dt.getFullYear() == co.yr && dt.getMonth() == co.mo - 1){
+                        //Add user to their cohort.
+                        users.push(invoice.customer);
+                        co.users.push(invoice.customer);
+                        added = true;
+                        break;
+                    }
+                }
+                //Add new cohort if we didn't just add the user.
+                if(!added){
+                    let newCo: cohort = {yr: dt.getFullYear(), mo: dt.getMonth() + 1, users: [invoice.customer]};
+                    cohorts.push(newCo);
+                    //For already added check
+                    users.push(invoice.customer);
+                }
+           }
     }
 }
 
@@ -63,71 +63,12 @@ for (const invoice of sortedInvoices){
 for(let cohort of cohorts){
     let digit = cohort.mo.toString().length;
     //Adding a leading zero to the month if needed.
+
+    //If we didn't sort users
+    cohort.users = gen_quickSort(cohort.users);
     if(digit == 1){
         console.log(cohort.yr.toString() + "-0" + cohort.mo.toString(), ": [" + cohort.users.toString() + "]");
     }   
     else{console.log(cohort.yr.toString() + "-" + cohort.mo.toString(), ": [" + cohort.users.toString() + "]");}
 }
-
 export let customersByCohort = cohorts;
-
-
-
-//QUICKSORT IMPLEMENTATION
-/**
- * Split array and swap values
- *
- * @param {Array<any>} array
- * @param {number} [left=0]
- * @param {number} [right=array.length - 1]
- * @returns {number}
- */
-function timestamp_partition(array: Array<any>, left: number = 0, right: number = array.length - 1) {
-    const pivot = array[Math.floor((right + left) / 2)];
-    let i = left;
-    let j = right;
-  
-    while (i <= j) {
-      while (array[i].timestamp < pivot.timestamp) {
-        i++;
-      }
-  
-      while (array[j].timestamp > pivot.timestamp) {
-        j--;
-      }
-  
-      if (i <= j) {
-        [array[i], array[j]] = [array[j], array[i]];
-        i++;
-        j--;
-      }
-    }
-  
-    return i;
-  }
-
-  /**
- * Quicksort implementation
- *
- * @param {Array<any>} array
- * @param {number} [left=0]
- * @param {number} [right=array.length - 1]
- * @returns {Array<any>}
- */
-export function timestamp_quickSort(array: Array<any>, left: number = 0, right: number = array.length - 1) {
-    let index;
-  
-    if (array.length > 1) {
-      index = timestamp_partition(array, left, right);
-  
-      if (left < index - 1) {
-        timestamp_quickSort(array, left, index - 1);
-      }
-  
-      if (index < right) {
-        timestamp_quickSort(array, index, right);
-      }
-    }
-  
-    return array;
-  }

@@ -1,4 +1,4 @@
-import { customersByCohort, sortedInvoices } from './customers-by-cohort';
+import { customersByCohort, sortedInvoices} from './customers-by-cohort';
 import { invoiceData } from './invoice-data';
 
 // Write a script to calculate the revenue from each cohort for each month.
@@ -52,22 +52,24 @@ for (const cohort of customersByCohort){
 }
 
 //Main loop for populating customersByCohort
-for (const invoice of sortedInvoices){
+for (const invoice of invoiceData){
     //Will give us the index of the month we will be inserting to.
-    let month_index = monthsBetween(start, invoice.timestamp);
-    let cohort_index = 0;
+    if(invoice.amount != 0){
+        let month_index = monthsBetween(start, invoice.timestamp);
+        let cohort_index = 0;
 
-    //Need to find the cohort our customer belongs to.
-    for(const cohort of customersByCohort){
-        //Iterate through users
-        for(const user of cohort.users){
-            //When we have found the customer
-            if(user == invoice.customer){
-                //Add the invoice amount to the current cohort at the current month.
-                revByCohort[cohort_index].rev[month_index] = invoice.amount + revByCohort[cohort_index].rev[month_index];
+        //Need to find the cohort our customer belongs to.
+        for(const cohort of customersByCohort){
+            //Iterate through users
+            for(const user of cohort.users){
+                //When we have found the customer
+                if(user == invoice.customer){
+                    //Add the invoice amount to the current cohort at the current month.
+                    revByCohort[cohort_index].rev[month_index] = invoice.amount + revByCohort[cohort_index].rev[month_index];
+                }
             }
+            cohort_index = cohort_index + 1;
         }
-        cohort_index = cohort_index + 1;
     }
 }
 

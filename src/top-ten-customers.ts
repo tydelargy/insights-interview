@@ -1,5 +1,5 @@
 import { invoiceData } from './invoice-data';
-// import { custARR_quickSort } from './quicksort';
+import { custARR_quickSort} from './quicksort';
 
 // Write a script to find the ten customers who have spent the most overall
 // The output should be sorted by the amount spent and include the customer ID.
@@ -13,7 +13,7 @@ import { invoiceData } from './invoice-data';
 
 
 //Creating interface for annual customer revenue
-interface customer_ARR{
+export interface customer_ARR{
     customer: number;
     rev: number;
 }
@@ -61,67 +61,3 @@ for (let i = 0; i < 10; i++){
     //Print line
     console.log(line);
 }
-
-
-
-
-
-//QUICKSORT IMPLEMENTATION
-/**
- * Split array and swap values
- *
- * @param {Array<customer_ARR>} array
- * @param {number} [left=0]
- * @param {number} [right=array.length - 1]
- * @returns {number}
- */
-function custARR_partition(array: Array<customer_ARR>, left: number = 0, right: number = array.length - 1) {
-    const pivot = array[Math.floor((right + left) / 2)];
-    let i = left;
-    let j = right;
-  
-    while (i <= j) {
-      //We are sorting high--->low so we swap > and <
-      while (array[i].rev > pivot.rev) {
-        i++;
-      }
-  
-      while (array[j].rev < pivot.rev) {
-        j--;
-      }
-  
-      if (i <= j) {
-        [array[i], array[j]] = [array[j], array[i]];
-        i++;
-        j--;
-      }
-    }
-  
-    return i;
-  }
-
-  /**
- * Quicksort implementation
- *
- * @param {Array<customer_ARR>} array
- * @param {number} [left=0]
- * @param {number} [right=array.length - 1]
- * @returns {Array<customer_ARR>}
- */
-export function custARR_quickSort(array: Array<customer_ARR>, left: number = 0, right: number = array.length - 1) {
-    let index;
-  
-    if (array.length > 1) {
-      index = custARR_partition(array, left, right);
-  
-      if (left < index - 1) {
-        custARR_quickSort(array, left, index - 1);
-      }
-  
-      if (index < right) {
-        custARR_quickSort(array, index, right);
-      }
-    }
-  
-    return array;
-  }
